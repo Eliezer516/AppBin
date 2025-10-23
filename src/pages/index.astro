@@ -7,5 +7,25 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout>
-	<Welcome />
+  <div id="editor"></div>
+
+  <script>
+    import { basicSetup } from "codemirror"
+    import { EditorView, keymap } from "@codemirror/view"
+    import { html } from "@codemirror/lang-html"
+    import { expandAbbreviation, abbreviationTracker  } from '@emmetio/codemirror6-plugin';
+
+    const view = new EditorView({
+      doc: "Start document",
+      parent: document.querySelector("#editor"),
+      extensions: [basicSetup, html(), abbreviationTracker()]
+    })
+  </script>
+
+  <style>
+    :global(.cm-editor, #editor) {
+      height: 100dvh;
+    }
+  </style>
 </Layout>
+
