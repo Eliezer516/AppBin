@@ -1,31 +1,63 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Welcome from "../components/Welcome.astro";
+import Layout from "../layouts/Layout.astro";
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
 <Layout>
-  <div id="editor"></div>
+  <div class="split">
+    <div id="split-0">
+      <div id="editor"></div>
+    </div>
+    <div id="split-1">mundo</div>
+  </div>
 
   <script>
-    import { basicSetup } from "codemirror"
-    import { EditorView, keymap } from "@codemirror/view"
-    import { html } from "@codemirror/lang-html"
-    import { expandAbbreviation, abbreviationTracker  } from '@emmetio/codemirror6-plugin';
+    import Split from "split.js";
+    import { basicSetup } from "codemirror";
+    import { EditorView, keymap } from "@codemirror/view";
+    import { html } from "@codemirror/lang-html";
+    import {
+      expandAbbreviation,
+      abbreviationTracker,
+    } from "@emmetio/codemirror6-plugin";
 
     const view = new EditorView({
       doc: "Start document",
       parent: document.querySelector("#editor"),
-      extensions: [basicSetup, html(), abbreviationTracker()]
-    })
+      extensions: [basicSetup, html(), abbreviationTracker()],
+    });
+
+    let split = Split(["#split-0", "#split-1"], {
+      minSize: 10,
+      gutterSize: 10,
+      snapOffset: 0,
+      direction: "vertical"
+    });
   </script>
 
   <style>
     :global(.cm-editor, #editor) {
+      height: 100%;
+    }
+
+    .split {
+      width: 100%;
       height: 100dvh;
+    }
+
+    .gutter {
+      background-color: #eee;
+      background-repeat: no-repeat;
+      background-position: 50%;
+    }
+
+    .gutter.gutter-horizontal {
+      background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==");
+      cursor: col-resize;
+      background-color: #aaa;
     }
   </style>
 </Layout>
-
