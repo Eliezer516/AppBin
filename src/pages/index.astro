@@ -1,23 +1,37 @@
 ---
-import Welcome from "../components/Welcome.astro";
 import Layout from "../layouts/Layout.astro";
+import Link from '../icons/Link.astro'
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
 <Layout>
-  <div class="split">
-    <div id="split-0">
-      <div id="editor"></div>
+  <article>
+    <header>
+      <h3>
+        AppHub
+      </h3>
+      <div class="buttons">
+        <button>
+          <Link />
+        </button>
+      </div>
+    </header>
+    <div class="split">
+      <div id="split-0">
+        <div id="editor"></div>
+      </div>
+      <div id="split-1">
+        Preview
+      </div>
     </div>
-    <div id="split-1">mundo</div>
-  </div>
+  </article>
 
   <script>
     import Split from "split.js";
     import { basicSetup } from "codemirror";
-    import { EditorView, keymap } from "@codemirror/view";
+    import { EditorView, placeholder } from "@codemirror/view";
     import { html } from "@codemirror/lang-html";
     import {
       expandAbbreviation,
@@ -25,9 +39,8 @@ import Layout from "../layouts/Layout.astro";
     } from "@emmetio/codemirror6-plugin";
 
     const view = new EditorView({
-      doc: "Start document",
       parent: document.querySelector("#editor"),
-      extensions: [basicSetup, html(), abbreviationTracker()],
+      extensions: [basicSetup, html(), abbreviationTracker(), placeholder("Ingresa tu codigo!")],
     });
 
     let split = Split(["#split-0", "#split-1"], {
@@ -38,14 +51,41 @@ import Layout from "../layouts/Layout.astro";
     });
   </script>
 
-  <style>
-    :global(.cm-editor, #editor) {
+  <style is:global>
+    article {
+      padding: 0;
+      height: 100dvh;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    article header {
+      padding: 0.5rem;
+      margin: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    article header h3 {
+      margin: 0;
+    }
+
+    article header .buttons button {
+      padding: .5rem;
+    }
+
+    .cm-editor, #editor {
       height: 100%;
     }
 
     .split {
       width: 100%;
-      height: 100dvh;
+    }
+
+    #split-1 {
+      display: grid;
+      place-items: center;
     }
 
     .gutter {
@@ -57,7 +97,6 @@ import Layout from "../layouts/Layout.astro";
     .gutter.gutter-horizontal {
       background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==");
       cursor: col-resize;
-      background-color: #aaa;
     }
   </style>
 </Layout>
