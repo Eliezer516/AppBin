@@ -14,6 +14,8 @@
     "@emmetio/codemirror6-plugin": "^0.4.0",
     "@picocss/pico": "^2.1.1",
     "astro": "^5.14.8",
+    "astro-icon": "^1.1.5",
+    "astro-icons": "^0.1.3",
     "codemirror": "^6.0.2",
     "split.js": "^1.6.5"
   }
