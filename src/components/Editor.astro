@@ -1,0 +1,24 @@
+<div id="editor"></div>
+
+<script>
+  import { basicSetup } from "codemirror";
+  import { EditorView, placeholder } from "@codemirror/view";
+  import { html } from "@codemirror/lang-html";
+  import {
+    expandAbbreviation,
+    abbreviationTracker,
+  } from "@emmetio/codemirror6-plugin";
+
+  const view = new EditorView({
+    parent: document.querySelector("#editor"),
+    extensions: [basicSetup, html(), abbreviationTracker(), placeholder("Ingresa tu codigo!")],
+  });
+</script>
+
+<style is:global>
+  .cm-editor, #editor {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+</style>
