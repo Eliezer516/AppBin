@@ -22,7 +22,8 @@
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.44.7",
     "nanostores": "^1.0.1",
-    "split.js": "^1.6.5"
+    "split.js": "^1.6.5",
+    "uid": "^2.0.2"
   },
   "devDependencies": {
     "drizzle-kit": "^0.31.5",
