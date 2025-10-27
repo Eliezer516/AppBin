@@ -1,46 +1,94 @@
-# Astro Starter Kit: Basics
 
-```sh
-pnpm create astro@latest -- --template basics
+# AppBin — Compartir previsualizaciones HTML (solo vista)
+
+AppBin es una aplicación para compartir previsualizaciones de HTML mediante un enlace público, al estilo de CodePen, pero sin compartir el código fuente. Los usuarios suben o generan una vista previa y el sistema crea un enlace que muestra únicamente la previsualización (render) en un entorno sandbox seguro.
+
+## Tabla de contenidos
+- [Descripción](#descripción)
+- [Características principales](#características-principales)
+- [Instalación rápida (ejemplo)](#instalación-rápida-ejemplo)
+- [Uso](#uso)
+  - [Desde la interfaz web](#desde-la-interfaz-web)
+- [Variables de entorno (ejemplo)](#variables-de-entorno-ejemplo)
+- [Despliegue con Docker (opcional)](#despliegue-con-docker-opcional)
+- [Contribuir](#contribuir)
+- [Licencia](#licencia)
+- [Contacto](#contacto)
+
+## Descripción
+AppBin permite a usuarios crear y compartir únicamente la previsualización (render) de documentos HTML. El código fuente no se expone ni se comparte públicamente; solo el resultado renderizado es accesible mediante el enlace generado. Esto es útil para compartir demos visuales, prototipos o resultados sin revelar la implementación.
+
+Casos de uso:
+- Compartir prototipos visuales con clientes o compañeros.
+- Enviar demos a equipos QA sin exponer el código.
+- Embebidos en documentación o chats para mostrar cómo se ve algo.
+
+## Características principales
+- Crear previsualizaciones HTML y generar un enlace único para visualización.
+- Control de eliminación (el autor puede eliminar enlaces).
+
+
+## Instalación rápida (ejemplo)
+
+1. Clonar repo
+```bash
+git clone https://github.com/Eliezer516/AppBin.git
+cd AppBin
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+2. Copiar archivo de ejemplo de variables de entorno y editar
+```bash
+cp .env.example .env
+# editar .env con DB
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+3. Instalar dependencias (ejemplo Node.js)
+```bash
+npm install
+# o
+yarn
+```
 
-## 🧞 Commands
+4. Ejecutar en modo desarrollo
+```bash
+npm run dev
+# o
+yarn dev
+```
 
-All commands are run from the root of the project, from a terminal:
+5. Crear migraciones / inicializar base de datos
+```bash
+npm run db:push
+```
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
 
-## 👀 Want to learn more?
+## Uso
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+### Desde la interfaz web
+- Abrir http://localhost:4321
+- Crear una nueva previsualización pegando el HTML 
+- Guardar y obtener el enlace público para compartir.
+
+Ver la previsualización
+- Abrir el enlace devuelto: https://appbin.example.com/p/a1b2c3d4
+- El contenido se sirve dentro de un iframe sandbox para mitigar riesgos.
+## Variables de entorno (ejemplo)
+Incluye las variables mínimas que el servicio podría necesitar. Ajusta nombres según tu implementación.
+```
+DB_FILE_NAME=file:local:db
+```
+## Contribuir
+1. Haz fork del repositorio.
+2. Crea una rama con tu feature o fix:
+```bash
+git checkout -b feat/nombre-de-mi-feature
+```
+3. Añade tests y documentación.
+4. Envía un Pull Request describiendo los cambios.
+
+## Licencia
+Este proyecto puede licenciarse bajo MIT u otra licencia; actualiza según corresponda.
+
+## Contacto
+Mantenedor: @Eliezer516  
+Repo: https://github.com/Eliezer516/AppBin
