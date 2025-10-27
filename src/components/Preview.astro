@@ -1,0 +1,18 @@
+<iframe srcdoc={``}></iframe>
+
+<style>
+  iframe {
+    width: 100%;
+    height: 100%;
+    }
+</style>
+
+<script>
+import { $editorContent } from '../store/store.ts'
+ const preview = document.querySelector('iframe')
+ $editorContent.subscribe(content => {
+  if (preview) {
+    preview.srcdoc = content
+  }
+ })
+</script>

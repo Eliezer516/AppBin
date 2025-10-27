@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Editor from '../components/Editor.astro'
+import Preview from '../components/Preview.astro'
 import Link from '../icons/Link.astro'
 import { getApps } from '../db/db'
 
@@ -24,7 +25,7 @@ console.log(await getApps())
         <Editor />
       </div>
       <div id="split-1">
-        Preview
+        <Preview />
       </div>
     </div>
   </article>
@@ -71,10 +72,6 @@ console.log(await getApps())
       width: 100%;
       height: 100%;
       overflow: hidden;
-    }
-
-    #split-0 {
-      width: 100vw;
     }
 
     .gutter {

@@ -6,8 +6,20 @@ const db = drizzle(process.env.DB_FILE_NAME!);
 
 
 const getApps = async () => {
-  const result = await db.select().from(apps)
+ try {
+   const result = await db.select().from(apps)
   return result
+ } catch (err) {
+  console.log(err)
+ }
+}
+
+const createNewApp = async () => {
+  try {
+
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 export {

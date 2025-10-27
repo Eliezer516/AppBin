@@ -8,10 +8,15 @@
     expandAbbreviation,
     abbreviationTracker,
   } from "@emmetio/codemirror6-plugin";
+  import { $editorContent } from '../store/store.ts'
 
   const view = new EditorView({
     parent: document.querySelector("#editor"),
-    extensions: [basicSetup, html(), abbreviationTracker(), placeholder("Ingresa tu codigo!")],
+    extensions: [basicSetup, html(), abbreviationTracker(), placeholder("Ingresa tu codigo!"), EditorView.updateListener.of(e => {
+      if(e.docChanged){
+        $editorContent.set(e.state.doc.toString())
+      }
+    })],
   });
 </script>
 

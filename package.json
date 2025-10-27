@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "db:push": "drizzle-kit push"
   },
   "dependencies": {
     "@codemirror/lang-html": "^6.4.11",
@@ -20,6 +21,7 @@
     "codemirror": "^6.0.2",
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.44.7",
+    "nanostores": "^1.0.1",
     "split.js": "^1.6.5"
   },
   "devDependencies": {
