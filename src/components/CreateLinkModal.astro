@@ -1,0 +1,48 @@
+<dialog open>
+  <article>
+    <header>
+      <button aria-label="Close" rel="prev"></button>
+      <p>
+        <strong>Solo fata un paso!</strong>
+      </p>
+    </header>
+    <form>
+      <fieldset role="group">
+        <input type="text" name="title" id="title">
+        <input type="submit" value="E">
+      </fieldset>
+    </form>
+  </article>
+</dialog>
+
+<script>
+  import { $showModal, $editorContent } from '../store/store.ts'
+  import { actions } from 'astro:actions'
+
+  const modal = document.querySelector("dialog")
+  const closeModalBtn = document.querySelector('[rel="prev"]')
+  const form = document.querySelector("form")
+
+  $showModal.subscribe(showModal => {
+    if (showModal === false) {
+      modal?.close()
+    } else {
+      modal?.showModal()
+    }
+  })
+
+  closeModalBtn?.addEventListener("click", () => $showModal.set(false))
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault()
+    const title = form.querySelector("input")?.value || ''
+    const code = $editorContent.get()
+
+    try {
+      const { data, error } = await actions.createNewBin({ title, code})
+      console.log(data)
+    } catch (err) {
+      console.log(err)
+    }
+
+  })
+  </script>

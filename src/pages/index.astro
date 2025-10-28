@@ -2,18 +2,20 @@
 import Layout from "../layouts/Layout.astro";
 import Editor from "../components/Editor.astro";
 import Preview from "../components/Preview.astro";
+import CreateLinkModal from "../components/CreateLinkModal.astro";
 import Link from "../icons/Link.astro";
-import { getApps } from "../db/db";
+import { getAllBins } from '../lib/db.ts'
 
-console.log(await getApps());
+console.log(await getAllBins())
 ---
 
 <Layout>
+  <CreateLinkModal />
   <article>
     <header>
       <h3>AppHub</h3>
       <div class="buttons">
-        <button>
+        <button id="link-modal">
           <Link />
         </button>
       </div>
@@ -29,6 +31,7 @@ console.log(await getApps());
   </article>
 
   <script>
+    import { $showModal } from "../store/store";
     import Split from "split.js";
 
     let split = Split(["#split-0", "#split-1"], {
@@ -37,7 +40,10 @@ console.log(await getApps());
       snapOffset: 0,
       direction: "vertical",
     });
-  </script>
+
+    const modalButton = document.querySelector("#link-modal")
+    modalButton?.addEventListener("click", () => $showModal.set(true) )
+  </script> 
 
   <style>
     article {
@@ -71,13 +77,13 @@ console.log(await getApps());
       overflow: hidden;
     }
 
-    .split .gutter {
+    :global(.gutter) {
       background-color: #eee;
       background-repeat: no-repeat;
       background-position: 50%;
     }
 
-    .split .gutter.gutter-vertical {
+    :global(.gutter.gutter-vertical) {
       background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=");
       cursor: row-resize;
     }
