@@ -1,9 +1,9 @@
-<dialog open>
+<dialog>
   <article>
     <header>
       <button aria-label="Close" rel="prev"></button>
       <p>
-        <strong>Solo fata un paso!</strong>
+        <strong>Solo fata un paso! {Astro.url.origin}</strong>
       </p>
     </header>
     <form>
@@ -12,6 +12,12 @@
         <input type="submit" value="E">
       </fieldset>
     </form>
+    <footer>
+      <fieldset role="group">
+        <input type="text" name="link" id="link">
+        <button disabled>C</button>
+      </fieldset>
+    </footer>
   </article>
 </dialog>
 
@@ -22,6 +28,8 @@
   const modal = document.querySelector("dialog")
   const closeModalBtn = document.querySelector('[rel="prev"]')
   const form = document.querySelector("form")
+
+  let result
 
   $showModal.subscribe(showModal => {
     if (showModal === false) {
@@ -39,7 +47,9 @@
 
     try {
       const { data, error } = await actions.createNewBin({ title, code})
-      console.log(data)
+      const inputResult = modal?.querySelector("footer input")
+      inputResult.value = data[0].id
+      result = data
     } catch (err) {
       console.log(err)
     }

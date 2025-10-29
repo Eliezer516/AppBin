@@ -1,0 +1,10 @@
+---
+export const prerender = false
+import { actions } from 'astro:actions'
+const { bin } = Astro.params
+
+const { data, error } = await Astro.callAction(actions.getBin, { id: bin})
+
+---
+
+<Fragment set:html={data[0].code} />
