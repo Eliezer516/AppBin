@@ -26,7 +26,7 @@ if (error) console.log(error);
           <article>
             <a href={Astro.url.origin + "/bin/" + bin.id} class="contrast">
               <img
-                src={`https://v1.screenshot.11ty.dev/${Astro.url.origin + "/bin/" + bin.id}/opengraph/`}
+                src={`https://v1.screenshot.11ty.dev/${encodeURIComponent(Astro.url.origin + "/bin/" + bin.id)}/opengraph/`}
                 alt=""
               />
               <footer>{bin.title}</footer>

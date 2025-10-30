@@ -15,5 +15,7 @@ import cloudflare from "@astrojs/cloudflare";
 export default defineConfig({
   integrations: [icon()],
 
-  adapter: vercel(),
+  adapter: vercel({
+    includeFiles: ['./local.db']
+  }),
 });
