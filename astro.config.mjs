@@ -9,12 +9,14 @@ import vercel from '@astrojs/vercel';
 
 import netlify from '@astrojs/netlify';
 
+import cloudflare from '@astrojs/cloudflare';
+
 // https://astro.build/config
 export default defineConfig({
   integrations: [icon(), db({
     mode: 'web'
   })],
 
-  adapter: netlify(),
+  adapter: cloudflare(),
   output: 'server'
 });
