@@ -1,22 +1,19 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
 
-import icon from 'astro-icon';
+import icon from "astro-icon";
 
-import db from '@astrojs/db';
+import db from "@astrojs/db";
 
-import vercel from '@astrojs/vercel';
+import vercel from "@astrojs/vercel";
 
-import netlify from '@astrojs/netlify';
+import netlify from "@astrojs/netlify";
 
-import cloudflare from '@astrojs/cloudflare';
+import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [icon(), db({
-    mode: 'web'
-  })],
+  integrations: [icon()],
 
   adapter: vercel(),
-  output: 'server'
 });
