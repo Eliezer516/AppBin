@@ -1,93 +1,60 @@
 ---
-export const prerender = false
+import { actions } from "astro:actions";
+import { Icon } from 'astro-icon/components'
 import Layout from "../layouts/Layout.astro";
-import Editor from "../components/Editor.astro";
-import Preview from "../components/Preview.astro";
-import CreateLinkModal from "../components/CreateLinkModal.astro";
-import Link from "../icons/Link.astro";
-import { actions } from 'astro:actions'
-
-const { data, error } = await Astro.callAction(actions.getAllBins, {})
-// console.log(data)
+const { data, error } = await Astro.callAction(actions.getAllBins, {});
+if (error) console.log(error);
 ---
 
 <Layout>
-  <CreateLinkModal />
-  <article>
-    <header>
-      <h3>AppHub</h3>
-      <div class="buttons">
-        <button id="link-modal">
-          <Link />
-        </button>
-      </div>
-    </header>
-    <div class="split">
-      <div id="split-0">
-        <Editor />
-      </div>
-      <div id="split-1">
-        <Preview />
-      </div>
-    </div>
-  </article>
+  <nav>
+    <ul>
+      <li><h3>AppBin</h3></li>
+    </ul>
+    <ul>
+      <li><a href="/editor"><button><Icon name="new" size="1.5rem" /></button></a></li>
+    </ul>
+  </nav>
 
-  <script>
-    import { $showModal } from "../store/store";
-    import Split from "split.js";
-
-    let split = Split(["#split-0", "#split-1"], {
-      minSize: 10,
-      gutterSize: 10,
-      snapOffset: 0,
-      direction: "vertical",
-    });
-
-    const modalButton = document.querySelector("#link-modal")
-    modalButton?.addEventListener("click", () => $showModal.set(true) )
-  </script> 
+  <div class="bins-container">
+     {
+    data?.map((bin) => {
+      return (
+        <article>
+          <a href={Astro.url.origin + "/bin/" + bin.id} class="contrast">
+            <img
+            src={`https://v1.screenshot.11ty.dev/${Astro.url.origin + "/bin/" + bin.id}/opengraph/`}
+            alt=""
+          />
+          <footer>
+            {bin.title}
+          </footer>
+          </a>
+        </article>
+      );
+    })
+  }
+  </div>
+ 
 
   <style>
-    article {
-      width: 100%;
-      height: 100dvh;
-      padding: 0;
+    nav {
+      padding: 1rem;
+    }
+
+    nav h3 {
+      margin: 0;
+    }
+
+    .bins-container {
+    padding: 10px;
       display: grid;
-      grid-template-rows: auto 1fr;
-      overflow: hidden;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
+      gap: 8px;
     }
 
-    article header {
-      padding: 0.5rem;
-      margin: 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    article header h3 {
-      margin: 0;
-    }
-
-    article header .buttons button {
-      padding: 0.5rem;
-    }
-
-    .split {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-    }
-
-    :global(.gutter) {
-      background-color: #eee;
-      background-repeat: no-repeat;
-      background-position: 50%;
-    }
-
-    :global(.gutter.gutter-vertical) {
-      background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=");
-      cursor: row-resize;
+    article a {
+      text-decoration: none;
     }
   </style>
 </Layout>

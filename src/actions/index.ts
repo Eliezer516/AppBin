@@ -15,8 +15,7 @@ export const server = {
         title: input.title,
         code: input.code
       }).returning()
-      console.log(result)
-      return result
+      return result[0]
     }
   }),
   getAllBins: defineAction({

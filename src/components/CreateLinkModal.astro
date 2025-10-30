@@ -1,3 +1,7 @@
+---
+import { Icon } from 'astro-icon/components'
+---
+
 <dialog>
   <article>
     <header>
@@ -9,13 +13,17 @@
     <form>
       <fieldset role="group">
         <input type="text" name="title" id="title">
-        <input type="submit" value="E">
+        <button>
+          <Icon name="right" />
+        </button>
       </fieldset>
     </form>
     <footer>
       <fieldset role="group">
-        <input type="text" name="link" id="link">
-        <button disabled>C</button>
+        <input disabled type="text" name="link" id="link">
+        <button disabled>
+           <Icon name="right" />
+        </button>
       </fieldset>
     </footer>
   </article>
@@ -24,6 +32,7 @@
 <script>
   import { $showModal, $editorContent } from '../store/store.ts'
   import { actions } from 'astro:actions'
+  import copy from 'copy-text-to-clipboard'
 
   const modal = document.querySelector("dialog")
   const closeModalBtn = document.querySelector('[rel="prev"]')
@@ -46,9 +55,21 @@
     const code = $editorContent.get()
 
     try {
+      const inputResult = modal?.querySelector("footer input") as HTMLInputElement | null
+      const copyBtn = modal?.querySelector("footer button") as HTMLButtonElement | null
       const { data, error } = await actions.createNewBin({ title, code})
-      const inputResult = modal?.querySelector("footer input")
-      inputResult.value = data[0].id
+      if (inputResult) {
+        inputResult.value = `${location.origin}/bin/${data?.id}`
+        inputResult.disabled = false
+      }
+      if (copyBtn) {
+        copyBtn.disabled = false
+        copyBtn.addEventListener("click", () => {
+          copy(inputResult.value, {
+            target: modal as HTMLElement
+          })
+        })
+      }
       result = data
     } catch (err) {
       console.log(err)
