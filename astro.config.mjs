@@ -7,12 +7,14 @@ import db from '@astrojs/db';
 
 import vercel from '@astrojs/vercel';
 
+import netlify from '@astrojs/netlify';
+
 // https://astro.build/config
 export default defineConfig({
   integrations: [icon(), db({
     mode: 'web'
   })],
 
-  adapter: vercel(),
+  adapter: netlify(),
   output: 'server'
 });
