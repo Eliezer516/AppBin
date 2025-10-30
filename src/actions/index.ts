@@ -15,6 +15,9 @@ export const server = {
       code: z.string(),
     }),
     handler: async (input) => {
+      try {
+
+      
       const result = await db
         .insert(bincraft)
         .values({
@@ -24,6 +27,9 @@ export const server = {
         })
         .returning();
       return result[0];
+     } catch (err) {
+      console.log(err)
+     }
     },
   }),
   getAllBins: defineAction({

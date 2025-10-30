@@ -11,7 +11,7 @@
   import { $editorContent } from '../store/store.ts'
 
   const view = new EditorView({
-    parent: document.querySelector("#editor"),
+    parent: document.querySelector("#editor") as HTMLElement,
     extensions: [basicSetup, html(), abbreviationTracker(), placeholder("Ingresa tu codigo!"), EditorView.updateListener.of(e => {
       if(e.docChanged){
         $editorContent.set(e.state.doc.toString())
