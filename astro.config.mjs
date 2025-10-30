@@ -17,6 +17,6 @@ export default defineConfig({
     mode: 'web'
   })],
 
-  adapter: cloudflare(),
+  adapter: vercel(),
   output: 'server'
 });
