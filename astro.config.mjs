@@ -13,5 +13,6 @@ export default defineConfig({
     mode: 'web'
   })],
 
-  adapter: vercel()
+  adapter: vercel(),
+  output: 'server'
 });
