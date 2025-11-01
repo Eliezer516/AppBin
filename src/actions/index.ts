@@ -12,17 +12,14 @@ export const server = {
     }),
     handler: async (input) => {
       try {
-
-      
-      const result = await db
-        .insert(bincraft)
-        .values({
-          id: uid(),
-          title: input.title,
-          code: input.code,
-        })
-        .returning();
-      return result[0];
+        const result = await db
+          .insert(bincraft)
+          .values({
+            id: uid(),
+            title: input.title,
+            code: input.code,
+          }).returning();
+        return result[0];
      } catch (err) {
       console.log(err)
      }
@@ -46,4 +43,16 @@ export const server = {
       return result;
     },
   }),
+  deleteBin: defineAction({
+    input: z.object({
+      id: z.string()
+    }),
+    handler: async (input) => {
+      try {
+        await db.delete(bincraft).where(eq(bincraft.id, input.id))
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  })
 };

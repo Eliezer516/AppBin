@@ -7,13 +7,16 @@ import db from "@astrojs/db";
 
 import vercel from "@astrojs/vercel";
 
-import netlify from "@astrojs/netlify";
 
-import cloudflare from "@astrojs/cloudflare";
+import preact from "@astrojs/preact";
+
+
+import svelte from "@astrojs/svelte";
+
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [icon(), db()],
+  integrations: [icon(), db(), svelte()],
 
   adapter: vercel({
     includeFiles: ['./local.db']

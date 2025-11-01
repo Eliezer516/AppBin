@@ -15,7 +15,7 @@ import { Icon } from 'astro-icon/components'
       <fieldset role="group">
         <input type="text" name="title" id="title">
         <button>
-          <Icon name="right" />
+          <Icon name="right" size="1.5rem" />
         </button>
       </fieldset>
     </form>
@@ -23,7 +23,7 @@ import { Icon } from 'astro-icon/components'
       <fieldset role="group">
         <input disabled type="text" name="link" id="link">
         <button disabled>
-           <Icon name="right" />
+           <Icon name="copy" size="1.5rem" />
         </button>
       </fieldset>
     </footer>
@@ -31,50 +31,56 @@ import { Icon } from 'astro-icon/components'
 </dialog>
 
 <script>
-  import { $showModal, $editorContent } from '../store/store.ts'
-  import { actions } from 'astro:actions'
-  import copy from 'copy-text-to-clipboard'
+import { $showModal, $editorContent } from '../store/store.ts'
+import { actions } from 'astro:actions'
+import copy from 'copy-text-to-clipboard'
 
-  const modal = document.querySelector("dialog")
-  const closeModalBtn = document.querySelector('[rel="prev"]')
-  const form = document.querySelector("form")
+const modal = document.querySelector("dialog")
+const closeModalBtn = document.querySelector('[rel="prev"]')
+const form = document.querySelector("form")
 
-  let result
+let result
 
-  $showModal.subscribe(showModal => {
-    if (showModal === false) {
-      modal?.close()
-    } else {
-      modal?.showModal()
+$showModal.subscribe(showModal => {
+  if (showModal === false) {
+    modal?.close()
+  } else {
+    modal?.showModal()
+  }
+})
+
+closeModalBtn?.addEventListener("click", () => $showModal.set(false))
+form?.addEventListener("submit", async (e) => {
+  e.preventDefault()
+  const title = form.querySelector("input")?.value || ''
+  const code = $editorContent.get()
+
+  try {
+    const inputResult = modal?.querySelector("footer input") as HTMLInputElement | null
+    const copyBtn = modal?.querySelector("footer button") as HTMLButtonElement | null
+    const { data, error } = await actions.createNewBin({ title, code})
+    if (inputResult) {
+      inputResult.value = `${location.origin}/bin/${data?.id}`
+      inputResult.disabled = false
     }
-  })
-
-  closeModalBtn?.addEventListener("click", () => $showModal.set(false))
-  form?.addEventListener("submit", async (e) => {
-    e.preventDefault()
-    const title = form.querySelector("input")?.value || ''
-    const code = $editorContent.get()
-
-    try {
-      const inputResult = modal?.querySelector("footer input") as HTMLInputElement | null
-      const copyBtn = modal?.querySelector("footer button") as HTMLButtonElement | null
-      const { data, error } = await actions.createNewBin({ title, code})
-      if (inputResult) {
-        inputResult.value = `${location.origin}/bin/${data?.id}`
-        inputResult.disabled = false
-      }
-      if (copyBtn) {
-        copyBtn.disabled = false
-        copyBtn.addEventListener("click", () => {
-          copy(inputResult.value, {
-            target: modal as HTMLElement
-          })
+    if (copyBtn) {
+      copyBtn.disabled = false
+      copyBtn.addEventListener("click", () => {
+        copy(inputResult.value, {
+          target: modal as HTMLElement
         })
-      }
-      result = data
-    } catch (err) {
-      console.log(err)
+      })
     }
+    result = data
+  } catch (err) {
+    console.log(err)
+  }
 
-  })
-  </script>
+})
+</script>
+
+<style>
+  fieldset button {
+    padding: 10px;
+  }
+</style>

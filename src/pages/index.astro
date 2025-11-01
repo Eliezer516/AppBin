@@ -3,6 +3,9 @@ export const prerender = false;
 import { actions } from "astro:actions";
 import { Icon } from "astro-icon/components";
 import Layout from "../layouts/Layout.astro";
+import BinsCard from '../components/BinsCard.svelte'
+
+
 const { data, error } = await Astro.callAction(actions.getAllBins, {});
 if (error) console.log(error);
 ---
@@ -14,32 +17,20 @@ if (error) console.log(error);
     </ul>
     <ul>
       <li>
-        <a href="/editor"><button><Icon name="new" size="1.5rem" /></button></a>
+        <a role="button" href="/editor"><Icon name="new" size="1.5rem" /></a>
       </li>
     </ul>
   </nav>
 
   <div class="bins-container">
     {
-      data?.map((bin) => {
-        return (
-          <article>
-            <a href={Astro.url.origin + "/bin/" + bin.id} class="contrast">
-              <img
-                src={`https://v1.screenshot.11ty.dev/${encodeURIComponent(Astro.url.origin + "/bin/" + bin.id)}/opengraph/`}
-                alt=""
-              />
-              <footer>{bin.title}</footer>
-            </a>
-          </article>
-        );
-      })
+      data?.map((bin) => <BinsCard id={bin.id} title={bin.title} origin={Astro.url.origin} client:load />)
     }
   </div>
 
-  <style>
+  <style lang="scss">
     nav {
-      padding: 1rem;
+      padding: 0 1rem;
     }
 
     nav h3 {
@@ -51,10 +42,6 @@ if (error) console.log(error);
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
       gap: 8px;
-    }
-
-    article a {
-      text-decoration: none;
     }
   </style>
 </Layout>

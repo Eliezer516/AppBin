@@ -4,7 +4,7 @@ import Layout from "../layouts/Layout.astro";
 import Editor from "../components/Editor.astro";
 import Preview from "../components/Preview.astro";
 import CreateLinkModal from "../components/CreateLinkModal.astro";
-import Link from "../icons/Link.astro";
+import { Icon } from "astro-icon/components";
 import { actions } from 'astro:actions'
 
 const { data, error } = await Astro.callAction(actions.getAllBins, {})
@@ -15,10 +15,10 @@ const { data, error } = await Astro.callAction(actions.getAllBins, {})
   <CreateLinkModal />
   <article>
     <header>
-      <h3>AppHub</h3>
+      <h3>AppBin</h3>
       <div class="buttons">
         <button id="link-modal">
-          <Link />
+          <Icon name="link" size="1.5rem" />
         </button>
       </div>
     </header>
