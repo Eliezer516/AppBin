@@ -13,7 +13,7 @@ import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [icon()],
+  integrations: [icon(), db()],
 
   adapter: vercel({
     includeFiles: ['./local.db']

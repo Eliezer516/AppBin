@@ -1,12 +1,8 @@
 import "dotenv/config";
 import { defineAction } from "astro:actions";
 import { z } from "astro:schema";
-import { drizzle } from "drizzle-orm/libsql";
-import { eq } from "drizzle-orm";
-import { bincraft } from "../db/schema";
+import { db, bincraft, eq } from "astro:db";
 import { uid } from "uid";
-
-const db = drizzle(process.env.DB_FILE_NAME!);
 
 export const server = {
   createNewBin: defineAction({
