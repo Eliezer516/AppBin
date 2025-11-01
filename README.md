@@ -36,12 +36,6 @@ git clone https://github.com/Eliezer516/AppBin.git
 cd AppBin
 ```
 
-2. Copiar archivo de ejemplo de variables de entorno y editar
-```bash
-cp .env.example .env
-# editar .env con DB
-```
-
 3. Instalar dependencias (ejemplo Node.js)
 ```bash
 npm install
@@ -70,12 +64,13 @@ npm run db:push
 - Guardar y obtener el enlace público para compartir.
 
 Ver la previsualización
-- Abrir el enlace devuelto: https://appbin.example.com/p/a1b2c3d4
+- Abrir el enlace devuelto: https://appbin.example.com/bin/{id}
 - El contenido se sirve dentro de un iframe sandbox para mitigar riesgos.
 ## Variables de entorno (ejemplo)
 Incluye las variables mínimas que el servicio podría necesitar. Ajusta nombres según tu implementación.
 ```
-DB_FILE_NAME=file:local:db
+ASTRO_DB_REMOTE_URL=libsql://andromeda-houston.turso.io
+ASTRO_DB_APP_TOKEN=eyJhbGciOiJF...3ahJpTkKDw
 ```
 ## Contribuir
 1. Haz fork del repositorio.
