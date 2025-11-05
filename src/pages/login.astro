@@ -1,0 +1,24 @@
+---
+import Layout from '../layouts/Layout.astro'
+---
+
+<Layout>
+  <article>
+    <button>Iniciar sesion</button>
+  </article>  
+
+  <script>
+    const { signIn, signOut } = await import("auth-astro/client")
+    const $ = (el) => document.querySelector(el)
+
+    $("button").onclick = async () => await signIn("github", { callbackURL: "/" })
+  </script>
+
+  <style>
+    body {
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+    }
+  </style>
+</Layout>
