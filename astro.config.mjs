@@ -14,11 +14,15 @@ import preact from "@astrojs/preact";
 import svelte from "@astrojs/svelte";
 
 
+import auth from "auth-astro";
+
+
 // https://astro.build/config
 export default defineConfig({
-  integrations: [icon(), db(), svelte()],
+  integrations: [icon(), db(), svelte(), auth()],
 
   adapter: vercel({
     includeFiles: ['./local.db']
   }),
+  output: "server"
 });
